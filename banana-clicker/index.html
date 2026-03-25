@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banana Touch 🍌</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ヘッダー：バナナ数 & BPS -->
+    <header id="header">
+      <div id="banana-count-wrap">
+        <span id="banana-count">0</span>
+        <span class="label"> 🍌 バナナ</span>
+      </div>
+      <div id="stats">
+        <span>毎秒: <strong id="bps">0</strong></span>
+        <span>クリック力: <strong id="click-power">1</strong></span>
+      </div>
+    </header>
+
+    <!-- メインエリア：バナナ -->
+    <main id="main-area">
+      <div id="banana-wrap">
+        <div id="banana" role="button" aria-label="バナナをタップ">
+          <!-- banana.png があれば表示、なければ絵文字 -->
+          <img
+            id="banana-img"
+            src="assets/banana.svg"
+            alt="🍌"
+            onerror="this.style.display='none'; document.getElementById('banana-emoji').style.display='block';"
+          />
+          <span id="banana-emoji" style="display:none;">🍌</span>
+        </div>
+        <!-- クリック時のエフェクトコンテナ -->
+        <div id="effect-layer"></div>
+      </div>
+    </main>
+
+    <!-- ショップ -->
+    <section id="shop">
+      <h2 class="shop-title">🛒 ショップ</h2>
+      <div id="shop-items">
+        <!-- JS で動的生成 -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- スクリプト（順番を厳守） -->
+  <script src="game.js"></script>
+  <script src="ui.js"></script>
+  <script src="save.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
