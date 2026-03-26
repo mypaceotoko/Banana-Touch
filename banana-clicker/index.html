@@ -17,6 +17,7 @@
           <span class="label"> 🍌 バナナ</span>
         </div>
         <button id="mute-btn" aria-label="ミュート切替" title="サウンド ON/OFF">🔊</button>
+        <button id="reset-btn" aria-label="リセット" title="ゲームをリセット">🔄</button>
       </div>
       <div id="stats">
         <span>毎秒: <strong id="bps">0</strong></span>
@@ -55,6 +56,18 @@
       <div id="shop-items"></div>
     </section>
 
+  </div>
+
+  <!-- リセット確認モーダル -->
+  <div id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title" hidden>
+    <div id="reset-modal-box">
+      <p id="reset-modal-title">🍌 ゲームをリセットしますか？</p>
+      <p id="reset-modal-sub">バナナ・アップグレードなど<br>すべてのデータが消えます</p>
+      <div id="reset-modal-btns">
+        <button id="reset-confirm-btn">リセットする</button>
+        <button id="reset-cancel-btn">キャンセル</button>
+      </div>
+    </div>
   </div>
 
   <!-- スクリプト（順番を厳守） -->
