@@ -101,14 +101,9 @@ html, body {
   gap: 8px;
 }
 
-/* ステージラベル */
+/* ステージラベル - 非表示（絵柄で表現） */
 #stage-label {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #8a5c00;
-  letter-spacing: 0.03em;
-  min-height: 1.4em;
-  transition: all 0.3s ease;
+  display: none;
 }
 
 /* =====================================================
@@ -179,12 +174,13 @@ html, body {
 }
 
 #banana-img {
-  width: 140px;
-  height: 140px;
+  width: 168px;
+  height: 168px;
   object-fit: contain;
   pointer-events: none;
+  display: block;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
-  transition: filter 0.6s ease;
+  transition: filter 0.6s ease, opacity 0.5s ease, transform 0.5s ease;
 }
 
 #banana-emoji {
@@ -520,6 +516,6 @@ html, body {
     box-shadow: 0 0 40px rgba(0,0,0,0.08);
   }
   #banana { width: 220px; height: 220px; }
-  #banana-img { width: 160px; height: 160px; }
+  #banana-img { width: 188px; height: 188px; }
   #banana-emoji { font-size: 140px; }
 }

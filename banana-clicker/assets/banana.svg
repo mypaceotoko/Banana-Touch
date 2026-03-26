@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <!-- Shadow -->
-  <ellipse cx="100" cy="175" rx="55" ry="12" fill="rgba(0,0,0,0.12)"/>
+  <!-- Stage 1: 普通バナナ - 標準サイズ・黄色 -->
+  <ellipse cx="95" cy="192" rx="42" ry="9" fill="rgba(0,0,0,0.12)"/>
   <!-- Stem -->
-  <path d="M95 30 Q90 15 80 10 Q88 18 92 32" fill="#4a2c00" stroke="#3a1f00" stroke-width="1.5"/>
-  <!-- Main banana body -->
-  <path d="M92 35 Q60 50 45 90 Q35 120 50 155 Q60 175 80 178 Q100 180 115 170 Q130 158 135 135 Q142 105 138 75 Q134 50 115 38 Q105 32 92 35Z"
+  <path d="M97 26 Q93 12 82 8 Q90 16 95 27" fill="#4a2c00" stroke="#3a1f00" stroke-width="1.5"/>
+  <!-- Body -->
+  <path d="M97 26 Q63 40 46 78 Q28 118 40 158 Q50 180 70 189 Q86 195 100 190 Q115 184 125 168 Q140 147 141 115 Q145 81 134 53 Q124 30 108 24 Q103 22 97 26Z"
         fill="#FFD740" stroke="#F9A825" stroke-width="2"/>
   <!-- Highlight -->
-  <path d="M98 40 Q72 55 58 92 Q50 118 62 150 Q70 170 85 172"
-        fill="none" stroke="#FFFDE7" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  <path d="M100 30 Q70 46 54 84 Q40 120 50 158 Q57 176 70 185"
+        fill="none" stroke="#FFFDE7" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
   <!-- Tip -->
-  <path d="M50 155 Q45 165 48 172 Q52 160 58 158" fill="#4a2c00"/>
-  <!-- Face: eyes -->
-  <circle cx="90" cy="100" r="7" fill="#3a2000"/>
-  <circle cx="115" cy="95" r="7" fill="#3a2000"/>
-  <circle cx="92" cy="98" r="2.5" fill="white"/>
-  <circle cx="117" cy="93" r="2.5" fill="white"/>
-  <!-- Face: blush -->
-  <ellipse cx="82" cy="112" rx="8" ry="5" fill="#ff8a80" opacity="0.55"/>
-  <ellipse cx="123" cy="107" rx="8" ry="5" fill="#ff8a80" opacity="0.55"/>
-  <!-- Face: smile -->
-  <path d="M88 118 Q102 130 118 118" fill="none" stroke="#3a2000" stroke-width="3" stroke-linecap="round"/>
+  <path d="M70 189 Q62 195 65 199 Q70 193 76 190" fill="#4a2c00"/>
+  <!-- Eyes -->
+  <circle cx="82" cy="107" r="7" fill="#3a2000"/>
+  <circle cx="107" cy="100" r="7" fill="#3a2000"/>
+  <circle cx="84" cy="105" r="2.5" fill="white"/>
+  <circle cx="109" cy="98"  r="2.5" fill="white"/>
+  <!-- Blush -->
+  <ellipse cx="74"  cy="119" rx="8" ry="5" fill="#ff8a80" opacity="0.55"/>
+  <ellipse cx="115" cy="112" rx="8" ry="5" fill="#ff8a80" opacity="0.55"/>
+  <!-- Smile -->
+  <path d="M79 127 Q94 140 112 127" fill="none" stroke="#3a2000" stroke-width="3" stroke-linecap="round"/>
 </svg>

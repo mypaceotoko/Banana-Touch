@@ -1,41 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Stage 2: ゴールドバナナ - 少し大きい・金色・星目 -->
   <defs>
-    <radialGradient id="goldGrad" cx="35%" cy="30%" r="70%">
+    <radialGradient id="g2" cx="38%" cy="30%" r="68%">
       <stop offset="0%" stop-color="#FFF9C4"/>
       <stop offset="50%" stop-color="#FFD600"/>
       <stop offset="100%" stop-color="#FF8F00"/>
     </radialGradient>
   </defs>
-  <!-- Shadow -->
-  <ellipse cx="100" cy="175" rx="55" ry="12" fill="rgba(180,100,0,0.2)"/>
-  <!-- Stem -->
-  <path d="M95 30 Q90 15 80 10 Q88 18 92 32" fill="#5D3A00" stroke="#3a1f00" stroke-width="1.5"/>
-  <!-- Main body (gold) -->
-  <path d="M92 35 Q60 50 45 90 Q35 120 50 155 Q60 175 80 178 Q100 180 115 170 Q130 158 135 135 Q142 105 138 75 Q134 50 115 38 Q105 32 92 35Z"
-        fill="url(#goldGrad)" stroke="#F9A825" stroke-width="2"/>
-  <!-- Shine streaks -->
-  <path d="M98 40 Q72 55 58 92 Q50 118 62 150 Q70 170 85 172"
-        fill="none" stroke="#FFFFF0" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
-  <path d="M110 45 Q95 60 88 90"
-        fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
-  <!-- Tip -->
-  <path d="M50 155 Q45 165 48 172 Q52 160 58 158" fill="#5D3A00"/>
-  <!-- Star eyes -->
-  <!-- Left star eye -->
-  <g transform="translate(90,100)">
-    <polygon points="0,-8 2,-3 7,-3 3,1 5,7 0,3 -5,7 -3,1 -7,-3 -2,-3" fill="#3a2000"/>
+  <g transform="translate(97,108) scale(1.12) translate(-97,-108)">
+    <ellipse cx="95" cy="192" rx="42" ry="9" fill="rgba(160,100,0,0.18)"/>
+    <path d="M97 26 Q93 12 82 8 Q90 16 95 27" fill="#5D3A00" stroke="#3a1f00" stroke-width="1.5"/>
+    <path d="M97 26 Q63 40 46 78 Q28 118 40 158 Q50 180 70 189 Q86 195 100 190 Q115 184 125 168 Q140 147 141 115 Q145 81 134 53 Q124 30 108 24 Q103 22 97 26Z"
+          fill="url(#g2)" stroke="#F9A825" stroke-width="2"/>
+    <path d="M100 30 Q70 46 54 84 Q40 120 50 158 Q57 176 70 185"
+          fill="none" stroke="#FFFFF0" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+    <path d="M70 189 Q62 195 65 199 Q70 193 76 190" fill="#5D3A00"/>
+    <!-- Star eyes -->
+    <g transform="translate(82,107)">
+      <polygon points="0,-8 2,-3 7,-3 3,1 5,7 0,3 -5,7 -3,1 -7,-3 -2,-3" fill="#3a2000"/>
+    </g>
+    <g transform="translate(107,100)">
+      <polygon points="0,-8 2,-3 7,-3 3,1 5,7 0,3 -5,7 -3,1 -7,-3 -2,-3" fill="#3a2000"/>
+    </g>
+    <!-- Blush -->
+    <ellipse cx="74"  cy="119" rx="9" ry="6" fill="#FF8F00" opacity="0.35"/>
+    <ellipse cx="115" cy="112" rx="9" ry="6" fill="#FF8F00" opacity="0.35"/>
+    <!-- Smile -->
+    <path d="M78 128 Q94 142 113 128" fill="none" stroke="#3a2000" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Sparkles -->
+    <text x="138" y="60"  font-size="15" opacity="0.9" fill="#5D3A00">✦</text>
+    <text x="44"  y="74"  font-size="11" opacity="0.7" fill="#5D3A00">✦</text>
+    <text x="136" y="150" font-size="10" opacity="0.65" fill="#5D3A00">✦</text>
   </g>
-  <!-- Right star eye -->
-  <g transform="translate(116,95)">
-    <polygon points="0,-8 2,-3 7,-3 3,1 5,7 0,3 -5,7 -3,1 -7,-3 -2,-3" fill="#3a2000"/>
-  </g>
-  <!-- Blush (gold toned) -->
-  <ellipse cx="80" cy="114" rx="9" ry="6" fill="#FF8F00" opacity="0.35"/>
-  <ellipse cx="122" cy="109" rx="9" ry="6" fill="#FF8F00" opacity="0.35"/>
-  <!-- Confident smile -->
-  <path d="M86 120 Q102 135 119 120" fill="none" stroke="#3a2000" stroke-width="3.5" stroke-linecap="round"/>
-  <!-- Sparkle decorations -->
-  <text x="138" y="65" font-size="16" opacity="0.9">✦</text>
-  <text x="50" y="78" font-size="11" opacity="0.7">✦</text>
-  <text x="130" y="148" font-size="10" opacity="0.6">✦</text>
 </svg>
