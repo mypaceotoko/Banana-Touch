@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <!-- Shadow -->
+  <ellipse cx="108" cy="228" rx="54" ry="10" fill="rgba(0,0,0,0.10)"/>
+  <!-- Stem -->
+  <path d="M120 22 Q114 8 102 4 Q110 14 118 24" fill="#4a6a20" stroke="#3a5010" stroke-width="1.5"/>
+  <!-- Main banana body: mostly yellow with slight green tint -->
+  <path d="M120 20
+           C104 20 86 34 72 60
+           C58 86 52 118 56 148
+           C60 174 74 196 94 206
+           C108 214 124 214 136 206
+           C150 196 158 178 160 154
+           C164 126 160 92 148 66
+           C138 44 130 28 120 20Z" fill="#E8D840" stroke="#C8B820" stroke-width="2.5"/>
+  <!-- Green tinge on upper-left edge -->
+  <path d="M120 20 C108 22 96 30 84 46 C74 60 68 76 64 94"
+        fill="none" stroke="#9AB830" stroke-width="6" stroke-linecap="round" opacity="0.28"/>
+  <!-- Highlight -->
+  <path d="M92 30 C78 48 70 70 68 94 C66 118 70 140 80 158" fill="none" stroke="#FFFDE7" stroke-width="9" stroke-linecap="round" opacity="0.55"/>
+  <!-- Tip -->
+  <path d="M56 148 C50 164 52 178 60 184 C62 168 68 158 76 154" fill="#4a6a20"/>
+  
+  <!-- Face: eyes -->
+  <circle cx="104" cy="114" r="8" fill="#3a2000"/>
+  <circle cx="130" cy="124" r="8" fill="#3a2000"/>
+  <circle cx="106" cy="112" r="2.8" fill="white"/>
+  <circle cx="132" cy="122" r="2.8" fill="white"/>
+  <!-- Face: blush -->
+  <ellipse cx="94" cy="130" rx="10" ry="6" fill="#ff8a80" opacity="0.55"/>
+  <ellipse cx="140" cy="140" rx="10" ry="6" fill="#ff8a80" opacity="0.55"/>
+  <!-- Face: smile -->
+  <path d="M100 142 Q117 156 136 142" fill="none" stroke="#3a2000" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

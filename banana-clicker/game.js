@@ -56,12 +56,42 @@ const UPGRADES = {
 // バナナステージ定義（累計バナナ数で段階が上がる）
 // =====================================================
 const BANANA_STAGES = [
-  { threshold: 0,          name: '🌱 青バナナ',        cssClass: 'stage-0' },
-  { threshold: 100,        name: '🍌 バナナ',           cssClass: 'stage-1' },
-  { threshold: 1_000,      name: '✨ ゴールドバナナ',    cssClass: 'stage-2' },
-  { threshold: 10_000,     name: '🌟 輝くバナナ',       cssClass: 'stage-3' },
-  { threshold: 100_000,    name: '🌈 レインボーバナナ',  cssClass: 'stage-4' },
-  { threshold: 1_000_000,  name: '🚀 コズミックバナナ',  cssClass: 'stage-5' }
+  {
+    threshold: 0,
+    name: '🍌 バナナ',
+    cssClass: 'stage-0',
+    imgSrc: 'assets/banana-stage1.svg'
+  },
+  {
+    threshold: 100,
+    name: '🍌 きいろバナナ',
+    cssClass: 'stage-1',
+    imgSrc: 'assets/banana-stage2.svg'
+  },
+  {
+    threshold: 1_000,
+    name: '✨ つやつやバナナ',
+    cssClass: 'stage-2',
+    imgSrc: 'assets/banana-stage3.svg'
+  },
+  {
+    threshold: 10_000,
+    name: '🌟 ゴールドバナナ',
+    cssClass: 'stage-3',
+    imgSrc: 'assets/banana-stage4.svg'
+  },
+  {
+    threshold: 100_000,
+    name: '👑 黄金バナナ',
+    cssClass: 'stage-4',
+    imgSrc: 'assets/banana-stage5.svg'
+  },
+  {
+    threshold: 1_000_000,
+    name: '🚀 レジェンドバナナ',
+    cssClass: 'stage-5',
+    imgSrc: 'assets/banana-stage6.svg'
+  }
 ];
 
 // コンボタイムアウト（ms）

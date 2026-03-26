@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <radialGradient id="bg6" cx="32%" cy="18%" r="75%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="15%" stop-color="#FFFDE7"/>
+      <stop offset="40%" stop-color="#FFE57F"/>
+      <stop offset="65%" stop-color="#FFB300"/>
+      <stop offset="85%" stop-color="#FF6F00"/>
+      <stop offset="100%" stop-color="#E64A19"/>
+    </radialGradient>
+    <filter id="legendGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="sg6" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="40%" stop-color="#FFD740"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+  </defs>
+  <!-- Background glow aura -->
+  <ellipse cx="108" cy="120" rx="110" ry="114" fill="rgba(255,215,0,0.07)"/>
+  <!-- Outer glow rings -->
+  <ellipse cx="108" cy="120" rx="108" ry="112" fill="none" stroke="#FFD740" stroke-width="5" opacity="0.30"/>
+  <ellipse cx="108" cy="120" rx="98" ry="102" fill="none" stroke="#FFE082" stroke-width="3" opacity="0.25"/>
+  <ellipse cx="108" cy="120" rx="88" ry="92" fill="none" stroke="white" stroke-width="1.5" opacity="0.15"/>
+  <!-- Shadow -->
+  <ellipse cx="108" cy="231" rx="64" ry="15" fill="rgba(0,0,0,0.22)"/>
+  <!-- Crown on top -->
+  <path d="M96 22 L100 8 L110 20 L120 6 L130 20 L140 8 L144 22 Z" fill="url(#crownGrad)" stroke="#CC8800" stroke-width="2"/>
+  <circle cx="100" cy="8" r="4" fill="#FF4444"/>
+  <circle cx="120" cy="6" r="5" fill="#4444FF"/>
+  <circle cx="140" cy="8" r="4" fill="#44FF44"/>
+  <!-- Stem -->
+  <path d="M120 24 Q114 10 102 6 Q110 16 118 26" fill="#5a3e00" stroke="#3a2800" stroke-width="1.5"/>
+  <!-- Main banana body: legend gold with intense glow -->
+  <path d="M120 20
+           C104 20 86 34 72 60
+           C58 86 52 118 56 148
+           C60 174 74 196 94 206
+           C108 214 124 214 136 206
+           C150 196 158 178 160 154
+           C164 126 160 92 148 66
+           C138 44 130 28 120 20Z" fill="url(#bg6)" stroke="#8B4513" stroke-width="3" filter="url(#legendGlow)"/>
+  <!-- Highlight (intense white gloss) -->
+  <path d="M92 30 C78 48 70 70 68 94 C66 118 70 140 80 158" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" opacity="0.60"/>
+  <path d="M102 28 C90 44 84 64 82 88" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <!-- Tip -->
+  <path d="M56 148 C50 164 52 178 60 184 C62 168 68 158 76 154" fill="#4a2c00"/>
+  <!-- Face: eyes (excited/legendary) -->
+  <circle cx="104" cy="114" r="10.5" fill="#3a2000"/>
+  <circle cx="130" cy="124" r="10.5" fill="#3a2000"/>
+  <circle cx="106" cy="111" r="4" fill="white"/>
+  <circle cx="132" cy="121" r="4" fill="white"/>
+  <!-- Sparkle in eyes -->
+  <circle cx="109" cy="110" r="2" fill="white" opacity="0.8"/>
+  <circle cx="135" cy="120" r="2" fill="white" opacity="0.8"/>
+  <!-- Face: blush (golden) -->
+  <ellipse cx="94" cy="130" rx="13" ry="7.5" fill="#ff8a80" opacity="0.70"/>
+  <ellipse cx="140" cy="140" rx="13" ry="7.5" fill="#ff8a80" opacity="0.70"/>
+  <!-- Face: huge smile -->
+  <path d="M98 150 Q117 170 138 150" fill="none" stroke="#3a2000" stroke-width="5" stroke-linecap="round"/>
+  <!-- LEGEND text badge -->
+  <rect x="82" y="186" width="76" height="22" rx="11" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.95"/>
+  <text x="120" y="202" text-anchor="middle" font-size="11" fill="#5a3e00" font-weight="bold" font-family="Arial">LEGEND</text>
+  <!-- Large 4-point stars (multiple) -->
+  <path d="M192 6 L198.5 15.5 L208 22 L198.5 28.5 L192 38 L185.5 28.5 L176 22 L185.5 15.5 Z" fill="#FFD740" filter="url(#sg6)"/>
+  <path d="M12 43 L18 52 L27 58 L18 64 L12 73 L6 64 L-3 58 L6 52 Z" fill="#FFD740" filter="url(#sg6)"/>
+  <path d="M200 153 L205 161 L213 166 L205 171 L200 179 L195 171 L187 166 L195 161 Z" fill="#FFA000" filter="url(#sg6)"/>
+  <path d="M10 153 L15 161 L23 166 L15 171 L10 179 L5 171 L-3 166 L5 161 Z" fill="#FFA000" filter="url(#sg6)"/>
+  <!-- Small sparkle stars -->
+  <path d="M182 60 L185 65 L190 68 L185 71 L182 76 L179 71 L174 68 L179 65 Z" fill="white" opacity="0.95"/>
+  <path d="M28 104 L31 109 L36 112 L31 115 L28 120 L25 115 L20 112 L25 109 Z" fill="white" opacity="0.9"/>
+  <path d="M196 90 L198.5 93.5 L202 96 L198.5 98.5 L196 102 L193.5 98.5 L190 96 L193.5 93.5 Z" fill="#FFFDE7" opacity="0.85"/>
+  <!-- Coins (multiple, prominent) -->
+  <circle cx="14" cy="196" r="15" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.95"/>
+  <text x="14" y="202" text-anchor="middle" font-size="14" fill="#7B5800" font-weight="bold">$</text>
+  <circle cx="204" cy="196" r="14" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.95"/>
+  <text x="204" y="201" text-anchor="middle" font-size="13" fill="#7B5800" font-weight="bold">$</text>
+  <circle cx="6" cy="220" r="10" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.85"/>
+  <text x="6" y="224" text-anchor="middle" font-size="9" fill="#7B5800" font-weight="bold">$</text>
+  <circle cx="214" cy="220" r="10" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.85"/>
+  <text x="214" y="224" text-anchor="middle" font-size="9" fill="#7B5800" font-weight="bold">$</text>
+  <!-- Shine dots (many) -->
+  <circle cx="140" cy="44" r="7" fill="white" opacity="0.60"/>
+  <circle cx="164" cy="68" r="5" fill="white" opacity="0.45"/>
+  <circle cx="154" cy="38" r="4" fill="white" opacity="0.55"/>
+  <circle cx="174" cy="56" r="3" fill="white" opacity="0.4"/>
+  <!-- Diamond sparkle at top -->
+  <path d="M120 0 L124 8 L120 16 L116 8 Z" fill="white" opacity="0.9"/>
+  <path d="M112 8 L120 4 L128 8 L120 12 Z" fill="white" opacity="0.9"/>
+</svg>

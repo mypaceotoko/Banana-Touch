@@ -12,6 +12,7 @@ const UI = {
   clickPower:   null,
   banana:       null,
   bananaBody:   null,
+  bananaImg:    null,
   effectLayer:  null,
   shopItems:    null,
   comboDisplay: null,
@@ -31,6 +32,7 @@ function initUI() {
   UI.clickPower   = document.getElementById('click-power');
   UI.banana       = document.getElementById('banana');
   UI.bananaBody   = document.getElementById('banana-body');
+  UI.bananaImg    = document.getElementById('banana-img');
   UI.effectLayer  = document.getElementById('effect-layer');
   UI.shopItems    = document.getElementById('shop-items');
   UI.comboDisplay = document.getElementById('combo-display');
@@ -100,25 +102,86 @@ function updateBananaStage(silent = false) {
   BANANA_STAGES.forEach(s => UI.banana.classList.remove(s.cssClass));
   UI.banana.classList.add(stage.cssClass);
 
+  // バナナ画像を切り替える
+  if (UI.bananaImg && stage.imgSrc) {
+    if (!silent && !isFirst) {
+      // 進化アニメーション: フェードアウト→画像切替→フェードイン
+      UI.bananaImg.classList.add('evolving');
+      setTimeout(() => {
+        UI.bananaImg.src = stage.imgSrc;
+        UI.bananaImg.classList.remove('evolving');
+        UI.bananaImg.classList.add('evolved');
+        setTimeout(() => UI.bananaImg.classList.remove('evolved'), 600);
+      }, 300);
+    } else {
+      UI.bananaImg.src = stage.imgSrc;
+    }
+  }
+
+  // ステージインジケーター更新
+  updateStageIndicator(stage);
+
   // ステージラベル更新
-  if (UI.stageLabel) UI.stageLabel.textContent = stage.name;
+  if (UI.stageLabel) {
+    UI.stageLabel.textContent = stage.name;
+    if (!silent && !isFirst) {
+      UI.stageLabel.classList.add('stage-label-updated');
+      setTimeout(() => UI.stageLabel.classList.remove('stage-label-updated'), 600);
+    }
+  }
 
   // ステージアップ演出
   if (!silent && !isFirst) {
-    showStageUpNotice(stage.name);
+    showStageUpNotice(stage.name, stage.cssClass);
+    spawnStageUpParticles(stage.cssClass);
     if (typeof playStageUpSound === 'function') playStageUpSound();
   }
 }
 
+/** ステージインジケーターを更新する */
+function updateStageIndicator(stage) {
+  const stageIndex = BANANA_STAGES.findIndex(s => s.cssClass === stage.cssClass);
+  const dots = document.querySelectorAll('.stage-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'completed');
+    if (i < stageIndex) dot.classList.add('completed');
+    else if (i === stageIndex) dot.classList.add('active');
+  });
+}
+
 /** ステージアップのフルスクリーン通知 */
-function showStageUpNotice(stageName) {
+function showStageUpNotice(stageName, stageClass) {
   const el = document.createElement('div');
-  el.className = 'stage-up-notice';
+  el.className = 'stage-up-notice ' + (stageClass || '');
   el.innerHTML = `✨ STAGE UP!<br><span>${stageName}</span>`;
   document.body.appendChild(el);
   // フェードアウト
   setTimeout(() => { el.style.opacity = '0'; }, 2200);
   setTimeout(() => el.remove(), 2800);
+}
+
+/** ステージアップ時のパーティクル演出 */
+function spawnStageUpParticles(stageClass) {
+  const stageIndex = BANANA_STAGES.findIndex(s => s.cssClass === stageClass);
+  const count = 8 + stageIndex * 6; // 高ステージほど多く
+  const symbols = ['⭐', '✨', '🌟', '💫', '🍌', '💰', '🪙', '👑'];
+  const legendSymbols = ['⭐', '✨', '🌟', '💫', '🍌', '💰', '🪙', '👑', '💎', '🔥'];
+  const useSymbols = stageIndex >= 4 ? legendSymbols : symbols;
+
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'stage-particle';
+      el.textContent = useSymbols[Math.floor(Math.random() * useSymbols.length)];
+      el.style.left   = (10 + Math.random() * 80) + '%';
+      el.style.top    = (20 + Math.random() * 60) + '%';
+      el.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+      el.style.animationDuration = (0.8 + Math.random() * 1.2) + 's';
+      el.style.animationDelay   = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2500);
+    }, i * 80);
+  }
 }
 
 // =====================================================
@@ -181,6 +244,9 @@ function onBananaClick(e) {
     : `+${formatNumber(result.amount)}`;
   showPopText(label, pos.x, pos.y, result.isCritical);
 
+  // タップエフェクト（高ステージほど豪華）
+  spawnClickParticles(pos, result.isCritical);
+
   // サウンド
   if (typeof playClickSound === 'function') playClickSound(result.isCritical);
   // 5の倍数コンボでコンボ音
@@ -197,6 +263,38 @@ function triggerClickAnimation(isCritical = false) {
   UI.bananaBody.classList.add(isCritical ? 'critical-shake' : 'clicked');
   const dur = isCritical ? 450 : 150;
   setTimeout(() => UI.bananaBody.classList.remove('clicked', 'critical-shake'), dur);
+}
+
+/** クリック時のパーティクルエフェクト */
+function spawnClickParticles(pos, isCritical) {
+  const stageIndex = BANANA_STAGES.findIndex(s => s.cssClass === _activeStageClass);
+  if (stageIndex < 0) return;
+
+  // ステージ0,1は控えめ、高ステージほど豪華
+  const count = isCritical ? (3 + stageIndex * 2) : Math.max(0, stageIndex - 1);
+  if (count <= 0) return;
+
+  const layerRect = UI.effectLayer.getBoundingClientRect();
+  const cx = (layerRect.width  / 2) + pos.x;
+  const cy = (layerRect.height / 2) + pos.y;
+
+  const particles = stageIndex >= 4
+    ? ['⭐', '✨', '💫', '🌟', '🪙']
+    : stageIndex >= 2
+      ? ['✨', '💫', '⭐']
+      : ['✨', '💫'];
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'click-particle';
+    el.textContent = particles[Math.floor(Math.random() * particles.length)];
+    el.style.left = (cx + (Math.random() - 0.5) * 80) + 'px';
+    el.style.top  = (cy + (Math.random() - 0.5) * 80) + 'px';
+    el.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+    el.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+    UI.effectLayer.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
 }
 
 /** クリック座標（バナナ中心からの相対値）を返す */

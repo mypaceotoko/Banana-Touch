@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <radialGradient id="bg4" cx="36%" cy="26%" r="70%">
+      <stop offset="0%" stop-color="#FFFDE7"/>
+      <stop offset="30%" stop-color="#FFD740"/>
+      <stop offset="70%" stop-color="#FFA000"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </radialGradient>
+    <filter id="glow4" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Outer glow ring -->
+  <ellipse cx="108" cy="120" rx="96" ry="100" fill="none" stroke="#FFD740" stroke-width="3" opacity="0.3"/>
+  <!-- Shadow -->
+  <ellipse cx="108" cy="229" rx="60" ry="13" fill="rgba(0,0,0,0.18)"/>
+  <!-- Stem -->
+  <path d="M120 22 Q114 8 102 4 Q110 14 118 24" fill="#5a3e00" stroke="#3a2800" stroke-width="1.5"/>
+  <!-- Main banana body: golden -->
+  <path d="M120 20
+           C104 20 86 34 72 60
+           C58 86 52 118 56 148
+           C60 174 74 196 94 206
+           C108 214 124 214 136 206
+           C150 196 158 178 160 154
+           C164 126 160 92 148 66
+           C138 44 130 28 120 20Z" fill="url(#bg4)" stroke="#CC7700" stroke-width="3"/>
+  <!-- Highlight -->
+  <path d="M92 30 C78 48 70 70 68 94 C66 118 70 140 80 158" fill="none" stroke="white" stroke-width="12" stroke-linecap="round" opacity="0.5"/>
+  <!-- Tip -->
+  <path d="M56 148 C50 164 52 178 60 184 C62 168 68 158 76 154" fill="#4a2c00"/>
+  
+  <!-- Face: eyes -->
+  <circle cx="104" cy="114" r="9" fill="#3a2000"/>
+  <circle cx="130" cy="124" r="9" fill="#3a2000"/>
+  <circle cx="106" cy="112" r="3.1" fill="white"/>
+  <circle cx="132" cy="122" r="3.1" fill="white"/>
+  <!-- Face: blush -->
+  <ellipse cx="94" cy="130" rx="11" ry="6.5" fill="#ff8a80" opacity="0.55"/>
+  <ellipse cx="140" cy="140" rx="11" ry="6.5" fill="#ff8a80" opacity="0.55"/>
+  <!-- Face: smile -->
+  <path d="M100 142 Q117 158 136 142" fill="none" stroke="#3a2000" stroke-width="4" stroke-linecap="round"/>
+  <!-- Gold sparkles -->
+  <path d="M188 19 L193 27 L201 32 L193 37 L188 45 L183 37 L175 32 L183 27 Z" fill="#FFD740" filter="url(#glow4)"/>
+  <path d="M22 58 L26.5 65.5 L34 70 L26.5 74.5 L22 82 L17.5 74.5 L10 70 L17.5 65.5 Z" fill="#FFD740" filter="url(#glow4)"/>
+  <path d="M196 160 L199.5 166.5 L206 170 L199.5 173.5 L196 180 L192.5 173.5 L186 170 L192.5 166.5 Z" fill="#FFA000" opacity="0.9"/>
+  <!-- Coin -->
+  <circle cx="22" cy="190" r="12" fill="#FFD740" stroke="#B8860B" stroke-width="2" opacity="0.85"/>
+  <text x="22" y="194" text-anchor="middle" font-size="11" fill="#7B5800" font-weight="bold">$</text>
+  <!-- Shine dots -->
+  <circle cx="138" cy="46" r="6" fill="white" opacity="0.45"/>
+  <circle cx="158" cy="70" r="4" fill="white" opacity="0.35"/>
+</svg>

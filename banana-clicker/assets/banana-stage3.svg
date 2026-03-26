@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <radialGradient id="bg3" cx="38%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="#FFF9C4"/>
+      <stop offset="40%" stop-color="#FFCA28"/>
+      <stop offset="100%" stop-color="#F9A825"/>
+    </radialGradient>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="108" cy="228" rx="58" ry="12" fill="rgba(0,0,0,0.14)"/>
+  <!-- Stem -->
+  <path d="M120 22 Q114 8 102 4 Q110 14 118 24" fill="#5a3e00" stroke="#3a2800" stroke-width="1.5"/>
+  <!-- Main banana body: glossy yellow -->
+  <path d="M120 20
+           C104 20 86 34 72 60
+           C58 86 52 118 56 148
+           C60 174 74 196 94 206
+           C108 214 124 214 136 206
+           C150 196 158 178 160 154
+           C164 126 160 92 148 66
+           C138 44 130 28 120 20Z" fill="url(#bg3)" stroke="#E69500" stroke-width="2.5"/>
+  <!-- Highlight (strong gloss) -->
+  <path d="M92 30 C78 48 70 70 68 94 C66 118 70 140 80 158" fill="none" stroke="white" stroke-width="11" stroke-linecap="round" opacity="0.55"/>
+  <path d="M100 28 C88 44 82 64 80 86" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+  <!-- Tip -->
+  <path d="M56 148 C50 164 52 178 60 184 C62 168 68 158 76 154" fill="#4a2c00"/>
+  
+  <!-- Face: eyes -->
+  <circle cx="104" cy="114" r="9" fill="#3a2000"/>
+  <circle cx="130" cy="124" r="9" fill="#3a2000"/>
+  <circle cx="106" cy="112" r="3.1" fill="white"/>
+  <circle cx="132" cy="122" r="3.1" fill="white"/>
+  <!-- Face: blush -->
+  <ellipse cx="94" cy="130" rx="11" ry="6.5" fill="#ff8a80" opacity="0.55"/>
+  <ellipse cx="140" cy="140" rx="11" ry="6.5" fill="#ff8a80" opacity="0.55"/>
+  <!-- Face: smile -->
+  <path d="M100 142 Q117 158 136 142" fill="none" stroke="#3a2000" stroke-width="4" stroke-linecap="round"/>
+  <!-- Sparkles -->
+  <path d="M186 27 L190 34 L197 38 L190 42 L186 49 L182 42 L175 38 L182 34 Z" fill="#FFD740" opacity="0.9"/>
+  <path d="M28 67 L31 73 L37 76 L31 79 L28 85 L25 79 L19 76 L25 73 Z" fill="#FFD740" opacity="0.7"/>
+  <!-- Shine dot -->
+  <circle cx="136" cy="44" r="5" fill="white" opacity="0.5"/>
+</svg>
