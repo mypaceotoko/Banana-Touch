@@ -1,18 +1,15 @@
 /**
  * save.js - セーブ・ロード処理
  * localStorage を使って自動保存・自動ロードする
+ * ※ ミュート状態は sound.js が直接 localStorage を管理
  */
 
-const SAVE_KEY    = 'banana-touch-save';
+const SAVE_KEY      = 'banana-touch-save';
 const SAVE_INTERVAL = 5000; // 5秒ごとに自動保存
 
 // =====================================================
 // セーブ
 // =====================================================
-
-/**
- * ゲーム状態を localStorage に保存する
- */
 function saveGame() {
   try {
     const data = {
@@ -33,11 +30,6 @@ function saveGame() {
 // =====================================================
 // ロード
 // =====================================================
-
-/**
- * localStorage からゲーム状態を復元する
- * @returns {boolean} ロード成功かどうか
- */
 function loadGame() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
@@ -45,7 +37,6 @@ function loadGame() {
 
     const data = JSON.parse(raw);
 
-    // 値を安全に復元（存在しない場合はデフォルト値）
     GameState.bananas      = typeof data.bananas      === 'number' ? data.bananas      : 0;
     GameState.clickPower   = typeof data.clickPower   === 'number' ? data.clickPower   : 1;
     GameState.bps          = typeof data.bps          === 'number' ? data.bps          : 0;
@@ -65,9 +56,8 @@ function loadGame() {
         if (earned > 0) {
           GameState.bananas      += earned;
           GameState.totalBananas += earned;
-          // オフライン報告（ui.js が読み込まれた後に表示）
-          window._offlineEarned = earned;
-          window._offlineSec    = Math.floor(offlineSec);
+          window._offlineEarned   = earned;
+          window._offlineSec      = Math.floor(offlineSec);
         }
       }
     }
@@ -82,15 +72,11 @@ function loadGame() {
 // =====================================================
 // 自動保存
 // =====================================================
-
-/**
- * 自動保存を開始する（5秒ごと）
- */
 function startAutoSave() {
   setInterval(saveGame, SAVE_INTERVAL);
 }
 
-// ページ離脱時にも保存
+// ページ離脱時・非表示時にも保存
 window.addEventListener('beforeunload', saveGame);
 window.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') saveGame();

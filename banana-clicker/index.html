@@ -9,11 +9,14 @@
 <body>
   <div id="app">
 
-    <!-- ヘッダー：バナナ数 & BPS -->
+    <!-- ヘッダー -->
     <header id="header">
-      <div id="banana-count-wrap">
-        <span id="banana-count">0</span>
-        <span class="label"> 🍌 バナナ</span>
+      <div id="header-top">
+        <div id="banana-count-wrap">
+          <span id="banana-count">0</span>
+          <span class="label"> 🍌 バナナ</span>
+        </div>
+        <button id="mute-btn" aria-label="ミュート切替" title="サウンド ON/OFF">🔊</button>
       </div>
       <div id="stats">
         <span>毎秒: <strong id="bps">0</strong></span>
@@ -21,18 +24,25 @@
       </div>
     </header>
 
-    <!-- メインエリア：バナナ -->
+    <!-- メインエリア -->
     <main id="main-area">
+      <!-- バナナのステージ名 -->
+      <div id="stage-label">🌱 青バナナ</div>
+      <!-- コンボカウンター -->
+      <div id="combo-display"></div>
+
       <div id="banana-wrap">
         <div id="banana" role="button" aria-label="バナナをタップ">
-          <!-- banana.png があれば表示、なければ絵文字 -->
-          <img
-            id="banana-img"
-            src="assets/banana.svg"
-            alt="🍌"
-            onerror="this.style.display='none'; document.getElementById('banana-emoji').style.display='block';"
-          />
-          <span id="banana-emoji" style="display:none;">🍌</span>
+          <!-- #banana-body がスケール/シェイクを担当 -->
+          <div id="banana-body">
+            <img
+              id="banana-img"
+              src="assets/banana.svg"
+              alt="🍌"
+              onerror="this.style.display='none'; document.getElementById('banana-emoji').style.display='block';"
+            />
+            <span id="banana-emoji" style="display:none;">🍌</span>
+          </div>
         </div>
         <!-- クリック時のエフェクトコンテナ -->
         <div id="effect-layer"></div>
@@ -42,9 +52,7 @@
     <!-- ショップ -->
     <section id="shop">
       <h2 class="shop-title">🛒 ショップ</h2>
-      <div id="shop-items">
-        <!-- JS で動的生成 -->
-      </div>
+      <div id="shop-items"></div>
     </section>
 
   </div>
@@ -53,6 +61,7 @@
   <script src="game.js"></script>
   <script src="ui.js"></script>
   <script src="save.js"></script>
+  <script src="sound.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

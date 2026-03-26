@@ -1,15 +1,15 @@
 /**
  * main.js - エントリーポイント
  * 各モジュールを初期化してゲームを開始する
- * 読み込み順: game.js → ui.js → save.js → main.js
+ * 読み込み順: game.js → ui.js → save.js → sound.js → main.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // 1. セーブデータをロード
-  const hasSave = loadGame();
+  loadGame();
 
-  // 2. UI を初期化（DOM参照・イベントリスナー設定）
+  // 2. UI を初期化（DOM参照・イベントリスナー・ショップ生成）
   initUI();
 
   // 3. BPS を再計算（ロードしたアップグレード数から）
@@ -21,18 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. 自動保存開始
   startAutoSave();
 
-  // 6. オフライン報告（あれば）
+  // 6. オフライン放置バナナの通知
   if (window._offlineEarned) {
     showOfflineNotice(window._offlineEarned, window._offlineSec);
   }
 
 });
 
-/**
- * オフライン放置で稼いだバナナを通知する
- * @param {number} earned  - 稼いだバナナ数
- * @param {number} seconds - 離れていた秒数
- */
+// =====================================================
+// オフライン報告トースト
+// =====================================================
 function showOfflineNotice(earned, seconds) {
   const minutes = Math.floor(seconds / 60);
   const timeStr = minutes >= 1 ? `${minutes}分` : `${seconds}秒`;
@@ -54,13 +52,14 @@ function showOfflineNotice(earned, seconds) {
     text-align: center;
     max-width: 300px;
     width: 90%;
+    pointer-events: none;
   `;
   notice.textContent = `🍌 おかえり！ ${timeStr}の間に ${formatNumber(earned)} バナナゲット！`;
 
   document.body.appendChild(notice);
   setTimeout(() => {
     notice.style.transition = 'opacity 0.5s';
-    notice.style.opacity = '0';
+    notice.style.opacity    = '0';
     setTimeout(() => notice.remove(), 500);
   }, 4000);
 }

@@ -1,6 +1,6 @@
 /* =====================================================
    Banana Touch - スタイルシート
-   モバイル優先・明るい黄色ベースのデザイン
+   モバイル優先・バナナ6ステージ・コンボ・クリティカル
    ===================================================== */
 
 /* --- リセット & ベース --- */
@@ -28,16 +28,26 @@ html, body {
   margin: 0 auto;
 }
 
-/* --- ヘッダー --- */
+/* =====================================================
+   ヘッダー
+   ===================================================== */
 #header {
-  background: rgba(255, 220, 0, 0.85);
+  background: rgba(255, 220, 0, 0.88);
   backdrop-filter: blur(6px);
-  padding: 14px 20px 10px;
+  padding: 10px 16px 8px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+#header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
 }
 
 #banana-count-wrap {
@@ -46,9 +56,7 @@ html, body {
   line-height: 1.1;
 }
 
-#banana-count {
-  color: #b35900;
-}
+#banana-count { color: #b35900; }
 
 #stats {
   display: flex;
@@ -59,15 +67,81 @@ html, body {
   color: #7a5200;
 }
 
-/* --- メインエリア --- */
-#main-area {
-  flex: 1;
+/* ミュートボタン */
+#mute-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.5);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px;
+  transition: background 0.15s, transform 0.1s;
+  padding: 0;
+}
+#mute-btn:active { transform: translateY(-50%) scale(0.88); }
+
+/* =====================================================
+   メインエリア
+   ===================================================== */
+#main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px 10px;
+  gap: 8px;
 }
 
+/* ステージラベル */
+#stage-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #8a5c00;
+  letter-spacing: 0.03em;
+  min-height: 1.4em;
+  transition: all 0.3s ease;
+}
+
+/* =====================================================
+   コンボ表示
+   ===================================================== */
+#combo-display {
+  min-height: 2rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+/* コンボレベル色 */
+#combo-display.combo-lv1 { color: #f57c00; }
+#combo-display.combo-lv2 { color: #e53935; text-shadow: 0 0 8px rgba(229,57,53,0.4); }
+#combo-display.combo-lv3 {
+  color: #c62828;
+  text-shadow: 0 0 12px rgba(198,40,40,0.6), 0 0 24px rgba(255,100,0,0.3);
+}
+
+/* コンボパルスアニメ */
+@keyframes comboPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+#combo-display.combo-pulse { animation: comboPulse 0.25s ease-out; }
+
+/* =====================================================
+   バナナ（共通）
+   ===================================================== */
 #banana-wrap {
   position: relative;
   display: flex;
@@ -75,7 +149,6 @@ html, body {
   justify-content: center;
 }
 
-/* バナナボタン */
 #banana {
   width: 200px;
   height: 200px;
@@ -84,21 +157,25 @@ html, body {
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
+  /* ステージ上書き用のデフォルト */
   background: radial-gradient(circle at 35% 35%, #fffde7, #ffd740);
-  box-shadow:
-    0 8px 32px rgba(255, 160, 0, 0.45),
-    0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
-  /* GPUアクセラレーション */
-  will-change: transform;
+  box-shadow: 0 8px 32px rgba(255, 160, 0, 0.45), 0 2px 8px rgba(0,0,0,0.1);
+  /* ステージ切り替え時のトランジション */
+  transition: background 0.6s ease, box-shadow 0.6s ease;
 }
 
-#banana:active,
-#banana.clicked {
+/* #banana-body がスケール/シェイクを管理 */
+#banana-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.08s ease;
+}
+
+#banana-body.clicked {
   transform: scale(0.88);
-  box-shadow:
-    0 3px 12px rgba(255, 160, 0, 0.3),
-    0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 #banana-img {
@@ -107,6 +184,7 @@ html, body {
   object-fit: contain;
   pointer-events: none;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+  transition: filter 0.6s ease;
 }
 
 #banana-emoji {
@@ -116,7 +194,141 @@ html, body {
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
 }
 
-/* --- エフェクトレイヤー (+N 表示) --- */
+/* =====================================================
+   クリティカルシェイク
+   ===================================================== */
+@keyframes criticalShake {
+  0%   { transform: scale(0.9) rotate(0deg); }
+  15%  { transform: scale(1.05) rotate(-8deg); }
+  30%  { transform: scale(0.88) rotate(8deg); }
+  45%  { transform: scale(1.0) rotate(-5deg); }
+  60%  { transform: scale(0.92) rotate(5deg); }
+  80%  { transform: scale(0.97) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+#banana-body.critical-shake {
+  animation: criticalShake 0.45s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+
+/* =====================================================
+   バナナステージ
+
+   Stage 0: 青バナナ   (0+)
+   Stage 1: 普通バナナ (100+)
+   Stage 2: ゴールド   (1,000+)
+   Stage 3: 輝くバナナ (10,000+)
+   Stage 4: レインボー (100,000+)
+   Stage 5: コズミック (1,000,000+)
+   ===================================================== */
+
+/* --- Stage 0: 青バナナ --- */
+#banana.stage-0 {
+  background: radial-gradient(circle at 35% 35%, #f1f8e9, #aed581);
+  box-shadow: 0 8px 28px rgba(100, 180, 0, 0.4), 0 2px 8px rgba(0,0,0,0.1);
+}
+#banana.stage-0 #banana-img {
+  filter: hue-rotate(88deg) saturate(0.85) brightness(0.88)
+          drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+/* --- Stage 1: 普通バナナ（デフォルト通り） --- */
+#banana.stage-1 {
+  background: radial-gradient(circle at 35% 35%, #fffde7, #ffd740);
+  box-shadow: 0 8px 32px rgba(255, 160, 0, 0.45), 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* --- Stage 2: ゴールドバナナ --- */
+#banana.stage-2 {
+  background: radial-gradient(circle at 35% 35%, #fff9c4, #ffca28);
+  box-shadow: 0 8px 40px rgba(255, 200, 0, 0.7), 0 2px 8px rgba(0,0,0,0.1);
+}
+#banana.stage-2 #banana-img {
+  filter: sepia(0.35) saturate(2.2) brightness(1.2)
+          drop-shadow(0 4px 10px rgba(255,180,0,0.5));
+}
+
+/* --- Stage 3: 輝くバナナ --- */
+#banana.stage-3 {
+  background: radial-gradient(circle at 35% 35%, #fffde7, #ffca28);
+  animation: stageGlow 1.6s ease-in-out infinite;
+}
+#banana.stage-3 #banana-img {
+  filter: sepia(0.2) saturate(2.5) brightness(1.3)
+          drop-shadow(0 4px 12px rgba(255,200,0,0.7));
+}
+
+@keyframes stageGlow {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(255,200,0,0.5), 0 0 16px rgba(255,220,0,0.2);
+  }
+  50% {
+    box-shadow: 0 8px 60px rgba(255,220,0,0.95), 0 0 40px rgba(255,230,0,0.5);
+  }
+}
+
+/* --- Stage 4: レインボーバナナ --- */
+#banana.stage-4 {
+  background: radial-gradient(circle at 35% 35%, #fffde7, #ffd740);
+  animation: rainbowGlow 2.5s linear infinite;
+}
+#banana.stage-4 #banana-img,
+#banana.stage-4 #banana-emoji {
+  animation: rainbowFilter 2.5s linear infinite;
+}
+
+@keyframes rainbowGlow {
+  0%   { box-shadow: 0 8px 50px rgba(255, 80,  80,  0.7); }
+  16%  { box-shadow: 0 8px 50px rgba(255, 160, 0,   0.7); }
+  33%  { box-shadow: 0 8px 50px rgba(200, 255, 0,   0.7); }
+  50%  { box-shadow: 0 8px 50px rgba(0,   220, 120, 0.7); }
+  66%  { box-shadow: 0 8px 50px rgba(0,   140, 255, 0.7); }
+  83%  { box-shadow: 0 8px 50px rgba(160, 0,   255, 0.7); }
+  100% { box-shadow: 0 8px 50px rgba(255, 80,  80,  0.7); }
+}
+
+@keyframes rainbowFilter {
+  from { filter: hue-rotate(0deg)   saturate(2) brightness(1.2)
+                 drop-shadow(0 4px 8px rgba(255,200,0,0.4)); }
+  to   { filter: hue-rotate(360deg) saturate(2) brightness(1.2)
+                 drop-shadow(0 4px 8px rgba(255,200,0,0.4)); }
+}
+
+/* --- Stage 5: コズミックバナナ --- */
+#banana.stage-5 {
+  background: radial-gradient(circle at 35% 35%, #fff8e1, #ffd740);
+  animation: cosmicGlow 1.2s ease-in-out infinite;
+}
+#banana.stage-5 #banana-img,
+#banana.stage-5 #banana-emoji {
+  animation: cosmicFilter 1.2s linear infinite;
+}
+
+@keyframes cosmicGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(255,255,200,0.8),
+      0 0 80px rgba(255,200,0,0.5),
+      0 0 120px rgba(255,100,0,0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 70px rgba(255,255,255,1),
+      0 0 120px rgba(255,220,0,0.8),
+      0 0 180px rgba(255,150,0,0.4);
+  }
+}
+
+@keyframes cosmicFilter {
+  from { filter: hue-rotate(0deg)   saturate(3) brightness(1.5)
+                 drop-shadow(0 0 16px rgba(255,255,100,0.9)); }
+  to   { filter: hue-rotate(360deg) saturate(3) brightness(1.5)
+                 drop-shadow(0 0 16px rgba(255,255,100,0.9)); }
+}
+
+/* =====================================================
+   エフェクトレイヤー（+N / CRITICAL! 表示）
+   ===================================================== */
 #effect-layer {
   position: absolute;
   top: 0;
@@ -127,6 +339,7 @@ html, body {
   overflow: visible;
 }
 
+/* 通常ポップテキスト */
 .pop-text {
   position: absolute;
   font-size: 1.4rem;
@@ -138,18 +351,69 @@ html, body {
   white-space: nowrap;
 }
 
-@keyframes popUp {
-  0%   { opacity: 1; transform: translateY(0) scale(1); }
-  60%  { opacity: 1; transform: translateY(-60px) scale(1.15); }
-  100% { opacity: 0; transform: translateY(-100px) scale(0.9); }
+/* クリティカルポップテキスト */
+.pop-critical {
+  font-size: 1.8rem;
+  color: #c62828;
+  text-shadow:
+    0 0 8px rgba(255,80,0,0.8),
+    0 2px 4px rgba(0,0,0,0.3);
+  animation: popUpCritical 1.1s ease-out forwards;
 }
 
-/* --- ショップ --- */
+@keyframes popUp {
+  0%   { opacity: 1; transform: translate(-50%,-50%) translateY(0)   scale(1);    }
+  60%  { opacity: 1; transform: translate(-50%,-50%) translateY(-60px) scale(1.15); }
+  100% { opacity: 0; transform: translate(-50%,-50%) translateY(-100px) scale(0.9); }
+}
+
+@keyframes popUpCritical {
+  0%   { opacity: 1; transform: translate(-50%,-50%) translateY(0)    scale(1.2); }
+  30%  { opacity: 1; transform: translate(-50%,-50%) translateY(-20px) scale(1.5); }
+  70%  { opacity: 1; transform: translate(-50%,-50%) translateY(-70px) scale(1.3); }
+  100% { opacity: 0; transform: translate(-50%,-50%) translateY(-120px) scale(1); }
+}
+
+/* =====================================================
+   ステージアップ通知
+   ===================================================== */
+.stage-up-notice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #ff8f00, #ffd740);
+  color: #fff;
+  padding: 20px 36px;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(255,150,0,0.6), 0 0 0 4px rgba(255,255,255,0.4);
+  z-index: 9999;
+  pointer-events: none;
+  animation: stageUpIn 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards;
+  transition: opacity 0.6s ease;
+  line-height: 1.4;
+}
+.stage-up-notice span {
+  display: block;
+  font-size: 1.6rem;
+}
+
+@keyframes stageUpIn {
+  from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+}
+
+/* =====================================================
+   ショップ
+   ===================================================== */
 #shop {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
   border-top: 2px solid rgba(255, 200, 0, 0.5);
-  padding: 16px 16px 24px;
+  padding: 16px 16px 28px;
 }
 
 .shop-title {
@@ -166,7 +430,6 @@ html, body {
   gap: 10px;
 }
 
-/* ショップカード */
 .shop-item {
   display: flex;
   align-items: center;
@@ -181,46 +444,24 @@ html, body {
   min-height: 64px;
 }
 
-.shop-item:active {
-  transform: scale(0.97);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-}
+.shop-item:active { transform: scale(0.97); }
 
 .shop-item.affordable {
   border-color: #ff9800;
   background: linear-gradient(90deg, #fff8e1, #ffecb3);
 }
-
 .shop-item.affordable:active {
   background: linear-gradient(90deg, #ffe082, #ffd54f);
 }
-
 .shop-item.disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-.item-info {
-  flex: 1;
-}
-
-.item-name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #5a3e00;
-}
-
-.item-desc {
-  font-size: 0.78rem;
-  color: #8a6500;
-  margin-top: 2px;
-}
-
-.item-count {
-  font-size: 0.75rem;
-  color: #b35900;
-  margin-top: 2px;
-}
+.item-info { flex: 1; }
+.item-name  { font-size: 1rem;  font-weight: 700; color: #5a3e00; }
+.item-desc  { font-size: 0.78rem; color: #8a6500; margin-top: 2px; }
+.item-count { font-size: 0.75rem; color: #b35900; margin-top: 2px; }
 
 .item-cost {
   font-size: 1rem;
@@ -230,41 +471,18 @@ html, body {
   text-align: right;
   white-space: nowrap;
 }
+.item-cost::before { content: '🍌 '; }
 
-.item-cost::before {
-  content: '🍌 ';
-}
-
-/* --- パルスアニメーション（バナナが光る） --- */
-@keyframes pulse {
-  0%   { box-shadow: 0 8px 32px rgba(255,160,0,0.45), 0 2px 8px rgba(0,0,0,0.1); }
-  50%  { box-shadow: 0 8px 48px rgba(255,200,0,0.8), 0 2px 16px rgba(255,160,0,0.3); }
-  100% { box-shadow: 0 8px 32px rgba(255,160,0,0.45), 0 2px 8px rgba(0,0,0,0.1); }
-}
-
-#banana.pulse {
-  animation: pulse 1s ease-in-out infinite;
-}
-
-/* --- レスポンシブ（デスクトップ調整） --- */
+/* =====================================================
+   レスポンシブ（デスクトップ）
+   ===================================================== */
 @media (min-width: 480px) {
   #app {
-    border-left: 1px solid rgba(255,200,0,0.3);
+    border-left:  1px solid rgba(255,200,0,0.3);
     border-right: 1px solid rgba(255,200,0,0.3);
     box-shadow: 0 0 40px rgba(0,0,0,0.08);
   }
-
-  #banana {
-    width: 220px;
-    height: 220px;
-  }
-
-  #banana-img {
-    width: 160px;
-    height: 160px;
-  }
-
-  #banana-emoji {
-    font-size: 140px;
-  }
+  #banana { width: 220px; height: 220px; }
+  #banana-img { width: 160px; height: 160px; }
+  #banana-emoji { font-size: 140px; }
 }

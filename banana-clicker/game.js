@@ -1,21 +1,33 @@
 /**
  * game.js - ゲームロジック
- * 状態管理・クリック処理・アップグレード・ゲームループ
+ * 状態管理・クリック・コンボ・クリティカル・アップグレード・ゲームループ
  */
 
 // =====================================================
 // ゲーム状態
 // =====================================================
 const GameState = {
-  bananas: 0,        // 所持バナナ数
-  clickPower: 1,     // 1クリックで増えるバナナ数
-  bps: 0,            // バナナ毎秒（Bananas Per Second）
+  bananas: 0,
+  clickPower: 1,
+  bps: 0,
   upgrades: {
-    click: 0,        // クリック強化の購入回数
-    auto: 0          // 自動バナナの購入回数
+    click: 0,
+    auto: 0
   },
-  totalClicks: 0,    // 累計クリック数（実績用）
-  totalBananas: 0    // 累計バナナ数（実績用）
+  totalClicks: 0,
+  totalBananas: 0,
+
+  // コンボ
+  combo: 0,
+  lastClickTime: 0,
+  comboTimer: null,
+
+  // クリティカル
+  criticalChance: 0.05,       // 5% の確率
+  criticalMultiplier: 10,     // 10倍
+
+  // ステージ
+  currentStageIndex: 0
 };
 
 // =====================================================
@@ -41,31 +53,78 @@ const UPGRADES = {
 };
 
 // =====================================================
+// バナナステージ定義（累計バナナ数で段階が上がる）
+// =====================================================
+const BANANA_STAGES = [
+  { threshold: 0,          name: '🌱 青バナナ',        cssClass: 'stage-0' },
+  { threshold: 100,        name: '🍌 バナナ',           cssClass: 'stage-1' },
+  { threshold: 1_000,      name: '✨ ゴールドバナナ',    cssClass: 'stage-2' },
+  { threshold: 10_000,     name: '🌟 輝くバナナ',       cssClass: 'stage-3' },
+  { threshold: 100_000,    name: '🌈 レインボーバナナ',  cssClass: 'stage-4' },
+  { threshold: 1_000_000,  name: '🚀 コズミックバナナ',  cssClass: 'stage-5' }
+];
+
+// コンボタイムアウト（ms）
+const COMBO_TIMEOUT = 1500;
+
+// =====================================================
 // ゲームロジック関数
 // =====================================================
 
-/**
- * バナナを追加する
- * @param {number} amount - 追加するバナナ数
- */
 function addBanana(amount) {
   GameState.bananas += amount;
   GameState.totalBananas += amount;
 }
 
 /**
- * バナナをクリックしたときの処理
+ * コンボ倍率を返す
+ * combo 5 未満: ×1 / 5+: ×1.5 / 10+: ×2 / 20+: ×3
+ */
+function getComboMultiplier() {
+  if (GameState.combo >= 20) return 3;
+  if (GameState.combo >= 10) return 2;
+  if (GameState.combo >= 5)  return 1.5;
+  return 1;
+}
+
+/**
+ * バナナクリック処理
+ * @returns {{ amount: number, isCritical: boolean, combo: number, comboMult: number }}
  */
 function handleClick() {
-  addBanana(GameState.clickPower);
+  const now = Date.now();
+  const elapsed = now - GameState.lastClickTime;
+
+  // コンボ更新
+  if (GameState.lastClickTime > 0 && elapsed < COMBO_TIMEOUT) {
+    GameState.combo = Math.min(GameState.combo + 1, 50);
+  } else {
+    GameState.combo = 1;
+  }
+  GameState.lastClickTime = now;
+
+  // コンボタイマーリセット
+  if (GameState.comboTimer) clearTimeout(GameState.comboTimer);
+  GameState.comboTimer = setTimeout(() => {
+    GameState.combo = 0;
+    // ui.js に通知（コンボ表示を消す）
+    if (typeof onComboReset === 'function') onComboReset();
+  }, COMBO_TIMEOUT);
+
+  // クリティカル判定
+  const isCritical = Math.random() < GameState.criticalChance;
+  const critMult   = isCritical ? GameState.criticalMultiplier : 1;
+  const comboMult  = getComboMultiplier();
+
+  const amount = Math.ceil(GameState.clickPower * critMult * comboMult);
+  addBanana(amount);
   GameState.totalClicks++;
+
+  return { amount, isCritical, combo: GameState.combo, comboMult };
 }
 
 /**
  * アップグレードの現在価格を計算する
- * price = basePrice * multiplier^count（四捨五入）
- * @param {string} type - アップグレードID
- * @returns {number}
  */
 function getUpgradePrice(type) {
   const upg = UPGRADES[type];
@@ -75,8 +134,6 @@ function getUpgradePrice(type) {
 
 /**
  * アップグレードを購入する
- * @param {string} type - アップグレードID ('click' | 'auto')
- * @returns {boolean} 購入成功かどうか
  */
 function buyUpgrade(type) {
   const price = getUpgradePrice(type);
@@ -86,58 +143,45 @@ function buyUpgrade(type) {
   GameState.bananas -= price;
   GameState.upgrades[type]++;
 
-  // 効果を適用
   if (upg.effect.type === 'click') {
     GameState.clickPower += upg.effect.value;
   } else if (upg.effect.type === 'bps') {
     updateBPS();
   }
-
   return true;
 }
 
-/**
- * BPS（毎秒バナナ生産量）を再計算する
- */
 function updateBPS() {
-  // autoアップグレード1個につき +1 BPS
   GameState.bps = GameState.upgrades.auto * UPGRADES.auto.effect.value;
 }
 
-// =====================================================
-// ゲームループ
-// =====================================================
+/**
+ * 現在のバナナステージを返す
+ */
+function getCurrentStage() {
+  let stage = BANANA_STAGES[0];
+  for (const s of BANANA_STAGES) {
+    if (GameState.totalBananas >= s.threshold) stage = s;
+  }
+  return stage;
+}
 
+// =====================================================
+// ゲームループ（requestAnimationFrame ベース）
+// =====================================================
 let lastTimestamp = null;
 
-/**
- * メインゲームループ（requestAnimationFrame ベース）
- * BPS を毎フレーム積算してバナナを増やす
- * @param {DOMHighResTimeStamp} timestamp
- */
 function gameLoop(timestamp) {
-  if (lastTimestamp === null) {
-    lastTimestamp = timestamp;
-  }
-
-  const delta = (timestamp - lastTimestamp) / 1000; // 秒単位
+  if (lastTimestamp === null) lastTimestamp = timestamp;
+  const delta = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
 
-  if (GameState.bps > 0) {
-    addBanana(GameState.bps * delta);
-  }
-
-  // UI更新（ui.js で定義）
-  if (typeof updateUI === 'function') {
-    updateUI();
-  }
+  if (GameState.bps > 0) addBanana(GameState.bps * delta);
+  if (typeof updateUI === 'function') updateUI();
 
   requestAnimationFrame(gameLoop);
 }
 
-/**
- * ゲームを開始する
- */
 function startGame() {
   updateBPS();
   requestAnimationFrame(gameLoop);
