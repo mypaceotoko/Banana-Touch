@@ -43,17 +43,19 @@ html, body {
 }
 
 #header-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
   align-items: center;
   gap: 8px;
 }
 
 #banana-count-wrap {
-  flex: 1;
   text-align: center;
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 #banana-count { color: #b35900; }
