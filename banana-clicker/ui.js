@@ -53,6 +53,33 @@ function initUI() {
   UI.banana.addEventListener('click',      onBananaClick);
   UI.banana.addEventListener('touchstart', onBananaClick, { passive: true });
 
+  // メニュー
+  const menuBtn      = document.getElementById('menu-btn');
+  const menuOverlay  = document.getElementById('menu-overlay');
+  const menuDrawer   = document.getElementById('menu-drawer');
+  const menuResetBtn = document.getElementById('menu-reset-btn');
+  const resetModal   = document.getElementById('reset-modal');
+  const confirmBtn   = document.getElementById('reset-confirm-btn');
+  const cancelBtn    = document.getElementById('reset-cancel-btn');
+
+  function openMenu()  { menuOverlay.classList.remove('hidden'); menuDrawer.classList.remove('hidden'); }
+  function closeMenu() { menuOverlay.classList.add('hidden');    menuDrawer.classList.add('hidden'); }
+
+  if (menuBtn)      menuBtn.addEventListener('click', openMenu);
+  if (menuOverlay)  menuOverlay.addEventListener('click', closeMenu);
+  if (menuResetBtn) menuResetBtn.addEventListener('click', () => {
+    closeMenu();
+    resetModal.classList.remove('hidden');
+  });
+  if (confirmBtn) confirmBtn.addEventListener('click', () => {
+    localStorage.clear();
+    location.reload();
+  });
+  if (cancelBtn) cancelBtn.addEventListener('click', () => resetModal.classList.add('hidden'));
+  if (resetModal) resetModal.addEventListener('click', (e) => {
+    if (e.target === resetModal) resetModal.classList.add('hidden');
+  });
+
   // ミュートボタン
   if (UI.muteBtn) {
     // 初期アイコンをサウンド状態に合わせる
