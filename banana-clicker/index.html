@@ -12,6 +12,7 @@
     <!-- ヘッダー -->
     <header id="header">
       <div id="header-top">
+        <button id="reset-btn" aria-label="リセット" title="ゲームをリセット">🔄</button>
         <div id="banana-count-wrap">
           <span id="banana-count">0</span>
           <span class="label"> 🍌 バナナ</span>
@@ -64,6 +65,18 @@
       <div id="shop-items"></div>
     </section>
 
+  </div>
+
+  <!-- リセット確認モーダル -->
+  <div id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title" hidden>
+    <div id="reset-modal-box">
+      <p id="reset-modal-title">🍌 ゲームをリセットしますか？</p>
+      <p id="reset-modal-sub">バナナ・アップグレードなど<br>すべてのデータが消えます</p>
+      <div id="reset-modal-btns">
+        <button id="reset-confirm-btn">リセットする</button>
+        <button id="reset-cancel-btn">キャンセル</button>
+      </div>
+    </div>
   </div>
 
   <!-- スクリプト（順番を厳守） -->

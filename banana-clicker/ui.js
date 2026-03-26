@@ -17,7 +17,9 @@ const UI = {
   shopItems:    null,
   comboDisplay: null,
   stageLabel:   null,
-  muteBtn:      null
+  muteBtn:      null,
+  resetBtn:     null,
+  resetModal:   null
 };
 
 // 現在適用中のステージクラス
@@ -38,6 +40,8 @@ function initUI() {
   UI.comboDisplay = document.getElementById('combo-display');
   UI.stageLabel   = document.getElementById('stage-label');
   UI.muteBtn      = document.getElementById('mute-btn');
+  UI.resetBtn     = document.getElementById('reset-btn');
+  UI.resetModal   = document.getElementById('reset-modal');
 
   // バナナクリックイベント
   UI.banana.addEventListener('click',      onBananaClick);
@@ -54,6 +58,34 @@ function initUI() {
         const muted = toggleMute();
         UI.muteBtn.textContent = muted ? '🔇' : '🔊';
       }
+    });
+  }
+
+  // リセットボタン
+  if (UI.resetBtn) {
+    UI.resetBtn.addEventListener('click', () => {
+      if (UI.resetModal) UI.resetModal.hidden = false;
+    });
+  }
+
+  // リセット確認モーダルのボタン
+  const confirmBtn = document.getElementById('reset-confirm-btn');
+  const cancelBtn  = document.getElementById('reset-cancel-btn');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', () => {
+      if (UI.resetModal) UI.resetModal.hidden = true;
+      if (typeof resetGame === 'function') resetGame();
+    });
+  }
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+      if (UI.resetModal) UI.resetModal.hidden = true;
+    });
+  }
+  // モーダル外クリックで閉じる
+  if (UI.resetModal) {
+    UI.resetModal.addEventListener('click', (e) => {
+      if (e.target === UI.resetModal) UI.resetModal.hidden = true;
     });
   }
 
@@ -383,6 +415,20 @@ function updateShopButtons() {
       card.classList.toggle('disabled',  !canAfford);
     }
   });
+}
+
+// =====================================================
+// リセット後のUI初期化
+// =====================================================
+function resetGameUI() {
+  // ステージクラスをリセット（再描画を強制）
+  _activeStageClass = '';
+
+  // コンボ表示を消す
+  onComboReset();
+
+  // ショップ更新
+  updateShopButtons();
 }
 
 function onBuyUpgrade(id) {

@@ -76,6 +76,38 @@ function startAutoSave() {
   setInterval(saveGame, SAVE_INTERVAL);
 }
 
+// =====================================================
+// リセット
+// =====================================================
+function resetGame() {
+  // コンボタイマーをキャンセル
+  if (GameState.comboTimer) {
+    clearTimeout(GameState.comboTimer);
+    GameState.comboTimer = null;
+  }
+
+  // GameState を初期値に戻す
+  GameState.bananas        = 0;
+  GameState.clickPower     = 1;
+  GameState.bps            = 0;
+  GameState.upgrades.click = 0;
+  GameState.upgrades.auto  = 0;
+  GameState.totalClicks    = 0;
+  GameState.totalBananas   = 0;
+  GameState.combo          = 0;
+  GameState.lastClickTime  = 0;
+
+  // セーブデータを削除
+  try {
+    localStorage.removeItem(SAVE_KEY);
+  } catch (e) {
+    console.warn('リセット時のセーブ削除に失敗しました:', e);
+  }
+
+  // UI をリセット（ui.js に委譲）
+  if (typeof resetGameUI === 'function') resetGameUI();
+}
+
 // ページ離脱時・非表示時にも保存
 window.addEventListener('beforeunload', saveGame);
 window.addEventListener('visibilitychange', () => {

@@ -43,17 +43,19 @@ html, body {
 }
 
 #header-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  position: relative;
+  gap: 8px;
 }
 
 #banana-count-wrap {
+  text-align: center;
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 #banana-count { color: #b35900; }
@@ -67,12 +69,10 @@ html, body {
   color: #7a5200;
 }
 
-/* ミュートボタン */
-#mute-btn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/* ミュート・リセット共通ボタンスタイル */
+#mute-btn,
+#reset-btn {
+  flex-shrink: 0;
   background: rgba(255,255,255,0.5);
   border: none;
   border-radius: 50%;
@@ -86,7 +86,89 @@ html, body {
   transition: background 0.15s, transform 0.1s;
   padding: 0;
 }
-#mute-btn:active { transform: translateY(-50%) scale(0.88); }
+#mute-btn:active,
+#reset-btn:active { transform: scale(0.88); }
+
+/* リセット確認モーダル */
+#reset-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeInOverlay 0.18s ease;
+}
+#reset-modal[hidden] { display: none; }
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+#reset-modal-box {
+  background: linear-gradient(160deg, #fffde7, #fff9c4);
+  border: 2px solid #ffd740;
+  border-radius: 20px;
+  padding: 28px 28px 22px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  max-width: 300px;
+  width: 88%;
+  animation: scaleInModal 0.2s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+}
+
+@keyframes scaleInModal {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+#reset-modal-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #5a3e00;
+  margin-bottom: 8px;
+}
+
+#reset-modal-sub {
+  font-size: 0.85rem;
+  color: #8a6500;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+#reset-modal-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#reset-confirm-btn,
+#reset-cancel-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.1s;
+}
+#reset-confirm-btn:active,
+#reset-cancel-btn:active { transform: scale(0.95); }
+
+#reset-confirm-btn {
+  background: linear-gradient(135deg, #ef5350, #c62828);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(198,40,40,0.3);
+}
+
+#reset-cancel-btn {
+  background: rgba(255,255,255,0.8);
+  color: #5a3e00;
+  border: 1.5px solid #ffd740;
+}
 
 /* =====================================================
    メインエリア
