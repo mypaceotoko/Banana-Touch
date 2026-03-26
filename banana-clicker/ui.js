@@ -12,11 +12,22 @@ const UI = {
   clickPower:   null,
   banana:       null,
   bananaBody:   null,
+  bananaImg:    null,
   effectLayer:  null,
   shopItems:    null,
   comboDisplay: null,
   stageLabel:   null,
   muteBtn:      null
+};
+
+// ステージ別SVGマップ
+const STAGE_SVG = {
+  'stage-0': 'assets/banana-0.svg',
+  'stage-1': 'assets/banana.svg',
+  'stage-2': 'assets/banana-2.svg',
+  'stage-3': 'assets/banana-3.svg',
+  'stage-4': 'assets/banana-4.svg',
+  'stage-5': 'assets/banana-5.svg',
 };
 
 // 現在適用中のステージクラス
@@ -31,6 +42,7 @@ function initUI() {
   UI.clickPower   = document.getElementById('click-power');
   UI.banana       = document.getElementById('banana');
   UI.bananaBody   = document.getElementById('banana-body');
+  UI.bananaImg    = document.getElementById('banana-img');
   UI.effectLayer  = document.getElementById('effect-layer');
   UI.shopItems    = document.getElementById('shop-items');
   UI.comboDisplay = document.getElementById('combo-display');
@@ -99,6 +111,19 @@ function updateBananaStage(silent = false) {
   // クラス付け替え
   BANANA_STAGES.forEach(s => UI.banana.classList.remove(s.cssClass));
   UI.banana.classList.add(stage.cssClass);
+
+  // バナナ画像スワップ
+  const svgSrc = STAGE_SVG[stage.cssClass];
+  if (UI.bananaImg && svgSrc) {
+    UI.bananaImg.style.opacity = '0';
+    UI.bananaImg.style.transform = 'scale(0.8)';
+    setTimeout(() => {
+      UI.bananaImg.src = svgSrc;
+      UI.bananaImg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      UI.bananaImg.style.opacity = '1';
+      UI.bananaImg.style.transform = 'scale(1)';
+    }, isFirst ? 0 : 300);
+  }
 
   // ステージラベル更新
   if (UI.stageLabel) UI.stageLabel.textContent = stage.name;
@@ -181,11 +206,43 @@ function onBananaClick(e) {
     : `+${formatNumber(result.amount)}`;
   showPopText(label, pos.x, pos.y, result.isCritical);
 
+  // クリティカルフラッシュ
+  if (result.isCritical) showCriticalFlash();
+
   // サウンド
   if (typeof playClickSound === 'function') playClickSound(result.isCritical);
-  // 5の倍数コンボでコンボ音
+  // 5の倍数コンボでコンボ音 & 炎パーティクル
   if (result.combo > 1 && result.combo % 5 === 0) {
     if (typeof playComboSound === 'function') playComboSound(result.combo);
+    spawnComboFire(result.combo);
+  }
+}
+
+/** クリティカル時の画面フラッシュ */
+function showCriticalFlash() {
+  const flash = document.createElement('div');
+  flash.className = 'critical-flash';
+  document.body.appendChild(flash);
+  flash.addEventListener('animationend', () => flash.remove());
+}
+
+/** コンボ炎パーティクル */
+function spawnComboFire(combo) {
+  if (!UI.comboDisplay) return;
+  const count = combo >= 20 ? 6 : combo >= 10 ? 4 : 3;
+  const rect  = UI.comboDisplay.getBoundingClientRect();
+  const cx    = rect.left + rect.width / 2;
+  const cy    = rect.top  + rect.height / 2;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'combo-fire';
+    el.textContent = combo >= 20 ? '🔥' : '🔥';
+    el.style.left   = (cx + (Math.random() - 0.5) * 60) + 'px';
+    el.style.top    = cy + 'px';
+    el.style.animationDelay = (i * 0.06) + 's';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
   }
 }
 

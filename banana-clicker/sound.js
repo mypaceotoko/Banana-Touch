@@ -84,27 +84,40 @@ function _tone({ freq = 440, freq2, type = 'sine', vol = 0.12, dur = 0.1, delay 
  */
 function playClickSound(isCritical = false) {
   if (isCritical) {
-    // クリティカル：ドラマチックな上昇→炸裂音
-    _tone({ freq: 200,  freq2: 800,  type: 'sine',     vol: 0.15, dur: 0.12 });
-    _tone({ freq: 900,  freq2: 450,  type: 'square',   vol: 0.09, dur: 0.18, delay: 0.06 });
-    _tone({ freq: 1400, freq2: 700,  type: 'sine',     vol: 0.12, dur: 0.25, delay: 0.10 });
-    _tone({ freq: 500,  freq2: 250,  type: 'triangle', vol: 0.08, dur: 0.35, delay: 0.20 });
+    // クリティカル：超ドラマチック炸裂音（チャージ→爆発→残響）
+    _tone({ freq: 150,  freq2: 1200, type: 'sine',     vol: 0.18, dur: 0.15 });
+    _tone({ freq: 1200, freq2: 500,  type: 'square',   vol: 0.10, dur: 0.20, delay: 0.08 });
+    _tone({ freq: 1800, freq2: 800,  type: 'sine',     vol: 0.14, dur: 0.28, delay: 0.12 });
+    _tone({ freq: 600,  freq2: 280,  type: 'triangle', vol: 0.09, dur: 0.45, delay: 0.22 });
+    _tone({ freq: 300,  freq2: 150,  type: 'sawtooth', vol: 0.06, dur: 0.55, delay: 0.30 });
   } else {
     // 通常クリック：短くポップな音
-    _tone({ freq: 520, freq2: 420, type: 'sine', vol: 0.10, dur: 0.07 });
+    _tone({ freq: 540, freq2: 440, type: 'sine', vol: 0.10, dur: 0.07 });
   }
 }
 
 /**
- * コンボ達成音（コンボ数が大きいほど高音）
+ * コンボ達成音（コンボ数で段階的に変化）
  * @param {number} combo
  */
 function playComboSound(combo) {
-  // combo 5 → 400Hz, 10 → 500Hz, 20 → 620Hz, 50 → 800Hz
-  const base = Math.min(400 + combo * 8, 800);
-  _tone({ freq: base, freq2: base * 1.5, type: 'sine', vol: 0.10, dur: 0.10 });
-  // ハーモニーを重ねる
-  _tone({ freq: base * 1.25, freq2: base * 1.8, type: 'sine', vol: 0.06, dur: 0.10, delay: 0.03 });
+  if (combo >= 20) {
+    // 超高コンボ：パワーアップ和音
+    const b = 700;
+    _tone({ freq: b,        freq2: b * 1.5,  type: 'sine',  vol: 0.14, dur: 0.15 });
+    _tone({ freq: b * 1.25, freq2: b * 1.75, type: 'sine',  vol: 0.10, dur: 0.15, delay: 0.04 });
+    _tone({ freq: b * 1.5,  freq2: b * 2.0,  type: 'sine',  vol: 0.08, dur: 0.20, delay: 0.08 });
+    _tone({ freq: b * 2,    freq2: b * 2.5,  type: 'sine',  vol: 0.06, dur: 0.25, delay: 0.12 });
+  } else if (combo >= 10) {
+    // 中コンボ：上昇音2重
+    const b = Math.min(480 + combo * 8, 650);
+    _tone({ freq: b,        freq2: b * 1.5, type: 'sine', vol: 0.11, dur: 0.12 });
+    _tone({ freq: b * 1.25, freq2: b * 1.8, type: 'sine', vol: 0.07, dur: 0.14, delay: 0.04 });
+  } else {
+    // 低コンボ：シンプルポップ
+    const b = Math.min(380 + combo * 12, 480);
+    _tone({ freq: b, freq2: b * 1.4, type: 'sine', vol: 0.09, dur: 0.09 });
+  }
 }
 
 /**

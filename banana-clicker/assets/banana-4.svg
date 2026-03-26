@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="rainbowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FF5252"/>
+      <stop offset="20%"  stop-color="#FF9800"/>
+      <stop offset="40%"  stop-color="#FFEB3B"/>
+      <stop offset="60%"  stop-color="#4CAF50"/>
+      <stop offset="80%"  stop-color="#2196F3"/>
+      <stop offset="100%" stop-color="#9C27B0"/>
+    </linearGradient>
+    <linearGradient id="rainbowStem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5D3A00"/>
+      <stop offset="100%" stop-color="#9C27B0"/>
+    </linearGradient>
+  </defs>
+  <!-- Rainbow halo -->
+  <ellipse cx="95" cy="105" rx="78" ry="85" fill="url(#rainbowGrad)" opacity="0.12"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="175" rx="55" ry="12" fill="rgba(100,0,100,0.2)"/>
+  <!-- Stem -->
+  <path d="M95 30 Q90 15 80 10 Q88 18 92 32" fill="url(#rainbowStem)" stroke="#7B1FA2" stroke-width="1.5"/>
+  <!-- Main body (rainbow) -->
+  <path d="M92 35 Q60 50 45 90 Q35 120 50 155 Q60 175 80 178 Q100 180 115 170 Q130 158 135 135 Q142 105 138 75 Q134 50 115 38 Q105 32 92 35Z"
+        fill="url(#rainbowGrad)" stroke="#CE93D8" stroke-width="2.5"/>
+  <!-- White shine -->
+  <path d="M98 40 Q72 55 58 92 Q50 118 62 150 Q70 170 85 172"
+        fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <!-- Tip -->
+  <path d="M50 155 Q45 165 48 172 Q52 160 58 158" fill="#5D3A00"/>
+  <!-- Heart eyes -->
+  <!-- Left heart -->
+  <path d="M84,96 C84,93 87,91 90,94 C93,91 96,93 96,96 C96,99 90,105 90,105 C90,105 84,99 84,96Z"
+        fill="#FF1744"/>
+  <!-- Right heart -->
+  <path d="M110,91 C110,88 113,86 116,89 C119,86 122,88 122,91 C122,94 116,100 116,100 C116,100 110,94 110,91Z"
+        fill="#FF1744"/>
+  <!-- Heart eye sparkles -->
+  <circle cx="91" cy="95" r="1.5" fill="white"/>
+  <circle cx="117" cy="90" r="1.5" fill="white"/>
+  <!-- Blush (pink) -->
+  <ellipse cx="79" cy="114" rx="10" ry="6" fill="#E91E63" opacity="0.4"/>
+  <ellipse cx="122" cy="109" rx="10" ry="6" fill="#E91E63" opacity="0.4"/>
+  <!-- Huge smile -->
+  <path d="M83 121 Q102 140 121 121" fill="none" stroke="#4a2000" stroke-width="4" stroke-linecap="round"/>
+  <!-- Rainbow sparkles -->
+  <text x="35" y="55" font-size="15">🌟</text>
+  <text x="142" y="60" font-size="15">🌟</text>
+  <text x="32" y="148" font-size="13">🌈</text>
+  <text x="140" y="152" font-size="13">🌈</text>
+</svg>

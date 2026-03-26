@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="cosmicGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#B39DDB"/>
+      <stop offset="40%"  stop-color="#5E35B1"/>
+      <stop offset="100%" stop-color="#1A1A3E"/>
+    </radialGradient>
+    <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="50%"  stop-color="#FFE57F"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </radialGradient>
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Cosmic outer aura -->
+  <ellipse cx="95" cy="105" rx="80" ry="88" fill="#3D1A8E" opacity="0.2"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="175" rx="55" ry="12" fill="rgba(30,0,80,0.35)"/>
+  <!-- Stem -->
+  <path d="M95 30 Q90 15 80 10 Q88 18 92 32" fill="#1A0A3E" stroke="#0D0020" stroke-width="1.5"/>
+  <!-- Main body (cosmic dark) -->
+  <path d="M92 35 Q60 50 45 90 Q35 120 50 155 Q60 175 80 178 Q100 180 115 170 Q130 158 135 135 Q142 105 138 75 Q134 50 115 38 Q105 32 92 35Z"
+        fill="url(#cosmicGrad)" stroke="#7E57C2" stroke-width="2.5"/>
+  <!-- Purple highlight -->
+  <path d="M98 40 Q72 55 58 92 Q50 118 62 150 Q70 170 85 172"
+        fill="none" stroke="#EDE7F6" stroke-width="5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Tip -->
+  <path d="M50 155 Q45 165 48 172 Q52 160 58 158" fill="#1A0A3E"/>
+  <!-- Glowing star eyes -->
+  <g filter="url(#starGlow)">
+    <!-- Left star eye -->
+    <g transform="translate(90,100)">
+      <polygon points="0,-11 2.8,-4 10,-4 4.5,1.5 7,9.5 0,4.5 -7,9.5 -4.5,1.5 -10,-4 -2.8,-4"
+               fill="url(#eyeGlow)"/>
+    </g>
+    <!-- Right star eye -->
+    <g transform="translate(116,95)">
+      <polygon points="0,-11 2.8,-4 10,-4 4.5,1.5 7,9.5 0,4.5 -7,9.5 -4.5,1.5 -10,-4 -2.8,-4"
+               fill="url(#eyeGlow)"/>
+    </g>
+  </g>
+  <!-- Blush (violet) -->
+  <ellipse cx="79" cy="114" rx="10" ry="6" fill="#CE93D8" opacity="0.5"/>
+  <ellipse cx="122" cy="109" rx="10" ry="6" fill="#CE93D8" opacity="0.5"/>
+  <!-- Cosmic smile -->
+  <path d="M84 121 Q102 137 120 121" fill="none" stroke="#EDE7F6" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Stars floating around -->
+  <g filter="url(#starGlow)" opacity="0.9">
+    <polygon points="42,45 43.5,50 49,50 44.5,53.5 46.5,58.5 42,55 37.5,58.5 39.5,53.5 35,50 40.5,50"
+             fill="#FFE57F" transform="scale(0.75) translate(14,15)"/>
+    <polygon points="150,52 151.5,57 157,57 152.5,60.5 154.5,65.5 150,62 145.5,65.5 147.5,60.5 143,57 148.5,57"
+             fill="#CE93D8" transform="scale(0.7) translate(65,22)"/>
+    <polygon points="38,148 39.5,153 45,153 40.5,156.5 42.5,161.5 38,158 33.5,161.5 35.5,156.5 31,153 36.5,153"
+             fill="#80DEEA" transform="scale(0.65) translate(18,80)"/>
+    <polygon points="155,145 156.5,150 162,150 157.5,153.5 159.5,158.5 155,155 150.5,158.5 152.5,153.5 148,150 153.5,150"
+             fill="#FFE57F" transform="scale(0.65) translate(87,78)"/>
+  </g>
+  <!-- Cosmic dust dots -->
+  <circle cx="55" cy="65" r="2" fill="#CE93D8" opacity="0.6"/>
+  <circle cx="145" cy="70" r="2.5" fill="#80DEEA" opacity="0.6"/>
+  <circle cx="48" cy="130" r="1.8" fill="#FFE57F" opacity="0.6"/>
+  <circle cx="148" cy="135" r="2" fill="#CE93D8" opacity="0.6"/>
+</svg>
