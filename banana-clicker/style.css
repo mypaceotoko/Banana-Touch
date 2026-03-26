@@ -45,12 +45,12 @@ html, body {
 #header-top {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  position: relative;
+  gap: 8px;
 }
 
 #banana-count-wrap {
+  flex: 1;
+  text-align: center;
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.1;
@@ -67,33 +67,10 @@ html, body {
   color: #7a5200;
 }
 
-/* ミュートボタン */
-#mute-btn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.5);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, transform 0.1s;
-  padding: 0;
-}
-#mute-btn:active { transform: translateY(-50%) scale(0.88); }
-
-/* リセットボタン */
+/* ミュート・リセット共通ボタンスタイル */
+#mute-btn,
 #reset-btn {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   background: rgba(255,255,255,0.5);
   border: none;
   border-radius: 50%;
@@ -107,7 +84,8 @@ html, body {
   transition: background 0.15s, transform 0.1s;
   padding: 0;
 }
-#reset-btn:active { transform: translateY(-50%) scale(0.88); }
+#mute-btn:active,
+#reset-btn:active { transform: scale(0.88); }
 
 /* リセット確認モーダル */
 #reset-modal {
