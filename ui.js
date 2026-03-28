@@ -63,8 +63,12 @@ UI.muteBtn.addEventListener('click', () => {
     if (UI.resetBtn) {
       UI.resetBtn.addEventListener('click', () => {
         if (confirm('ゲームを最初からやり直しますか？')) {
-          localStorage.removeItem('banana-touch-save');
-          location.reload();
+          // 全てのセーブデータを削除
+          localStorage.clear();
+          // キャッシュを回避してリロード
+          const url = new URL(location.href);
+          url.searchParams.set('r', Date.now());
+          location.href = url.toString();
         }
       });
     }
