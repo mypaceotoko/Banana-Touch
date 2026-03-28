@@ -88,6 +88,27 @@ html, body {
 }
 #mute-btn:active { transform: translateY(-50%) scale(0.88); }
 
+/* リセットボタン */
+#reset-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.5);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+  padding: 0;
+}
+#reset-btn:active { transform: translateY(-50%) scale(0.88); }
+
 /* =====================================================
    メインエリア
    ===================================================== */

@@ -16,9 +16,10 @@ const UI = {
   effectLayer:  null,
   shopItems:    null,
   comboDisplay: null,
-  stageLabel:   null,
-  muteBtn:      null
-};
+stageLabel:   null,
+    muteBtn:      null,
+    resetBtn:     null
+  };
 
 // 現在適用中のステージクラス
 let _activeStageClass = '';
@@ -36,8 +37,9 @@ function initUI() {
   UI.effectLayer  = document.getElementById('effect-layer');
   UI.shopItems    = document.getElementById('shop-items');
   UI.comboDisplay = document.getElementById('combo-display');
-  UI.stageLabel   = document.getElementById('stage-label');
-  UI.muteBtn      = document.getElementById('mute-btn');
+UI.stageLabel   = document.getElementById('stage-label');
+    UI.muteBtn      = document.getElementById('mute-btn');
+    UI.resetBtn     = document.getElementById('reset-btn');
 
   // バナナクリックイベント
   UI.banana.addEventListener('click',      onBananaClick);
@@ -49,13 +51,23 @@ function initUI() {
     if (typeof getMuted === 'function' && getMuted()) {
       UI.muteBtn.textContent = '🔇';
     }
-    UI.muteBtn.addEventListener('click', () => {
-      if (typeof toggleMute === 'function') {
-        const muted = toggleMute();
-        UI.muteBtn.textContent = muted ? '🔇' : '🔊';
-      }
-    });
-  }
+UI.muteBtn.addEventListener('click', () => {
+        if (typeof toggleMute === 'function') {
+          const muted = toggleMute();
+          UI.muteBtn.textContent = muted ? '🔇' : '🔊';
+        }
+      });
+    }
+  
+    // リセットボタン
+    if (UI.resetBtn) {
+      UI.resetBtn.addEventListener('click', () => {
+        if (confirm('ゲームを最初からやり直しますか？')) {
+          localStorage.removeItem('banana-touch-save');
+          location.reload();
+        }
+      });
+    }
 
   renderShop();
   updateBananaStage(true); // 初回はアニメーションなし
