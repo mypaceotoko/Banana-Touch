@@ -63,6 +63,8 @@ UI.muteBtn.addEventListener('click', () => {
     if (UI.resetBtn) {
       UI.resetBtn.addEventListener('click', () => {
         if (confirm('ゲームを最初からやり直しますか？')) {
+          // 自動保存を停止して保存イベントを削除
+          if (typeof stopAutoSave === 'function') stopAutoSave();
           // 全てのセーブデータを削除
           localStorage.clear();
           // キャッシュを回避してリロード

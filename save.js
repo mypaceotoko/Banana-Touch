@@ -6,6 +6,7 @@
 
 const SAVE_KEY      = 'banana-touch-save';
 const SAVE_INTERVAL = 5000; // 5秒ごとに自動保存
+let _autoSaveTimer = null;
 
 // =====================================================
 // セーブ
@@ -73,7 +74,14 @@ function loadGame() {
 // 自動保存
 // =====================================================
 function startAutoSave() {
-  setInterval(saveGame, SAVE_INTERVAL);
+  if (_autoSaveTimer) clearInterval(_autoSaveTimer);
+  _autoSaveTimer = setInterval(saveGame, SAVE_INTERVAL);
+}
+
+function stopAutoSave() {
+  if (_autoSaveTimer) clearInterval(_autoSaveTimer);
+  _autoSaveTimer = null;
+  window.removeEventListener('beforeunload', saveGame);
 }
 
 // ページ離脱時・非表示時にも保存
