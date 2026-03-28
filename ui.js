@@ -94,7 +94,10 @@ function formatNumber(num) {
 // UI更新（毎フレーム）
 // =====================================================
 function updateUI() {
-  if (UI.bananaCount) UI.bananaCount.textContent = formatNumber(GameState.bananas);
+  if (UI.bananaCount) {
+    // 数値のみを更新
+    UI.bananaCount.textContent = formatNumber(GameState.bananas);
+  }
   if (UI.bps)         UI.bps.textContent         = formatNumber(GameState.bps);
   if (UI.clickPower)  UI.clickPower.textContent   = formatNumber(GameState.clickPower);
   updateShopButtons();
