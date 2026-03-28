@@ -63,14 +63,16 @@ UI.muteBtn.addEventListener('click', () => {
     if (UI.resetBtn) {
       UI.resetBtn.addEventListener('click', () => {
         if (confirm('ゲームを最初からやり直しますか？')) {
-          // 自動保存を停止して保存イベントを削除
+          // 1. 自動保存を完全に停止し、セーブをブロック
           if (typeof stopAutoSave === 'function') stopAutoSave();
-          // 全てのセーブデータを削除
+          
+          // 2. 全てのストレージ（セーブデータ、設定など）を完全に削除
           localStorage.clear();
-          // キャッシュを回避してリロード
-          const url = new URL(location.href);
-          url.searchParams.set('r', Date.now());
-          location.href = url.toString();
+          sessionStorage.clear();
+          
+          // 3. キャッシュを完全に回避してトップページへリダイレクト
+          const baseUrl = location.origin + location.pathname;
+          location.href = baseUrl + '?reset=' + Date.now();
         }
       });
     }
